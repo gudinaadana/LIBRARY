@@ -1,0 +1,58 @@
+{
+    "sinan@student.mwu.edu.et": {
+        "password": "sin123",
+        "role": "student",
+        "name": "Sinan Da",
+        "id": 5,
+        "student_id": "ugrr\/51127\/17",
+        "phone": "0943705321",
+        "registered_at": "2026-02-03 07:47:21"
+    },
+    "gud@student.mwu.edu.et": {
+        "password": "gud123",
+        "role": "student",
+        "name": "Gudina Adana",
+        "id": 10,
+        "student_id": "ugrr\/51127\/18",
+        "phone": "0943705324",
+        "registered_at": "2026-02-04 19:39:42"
+    },
+    "abeb@student.mwu.edu.et": {
+        "password": "$2y$10$fJvSCil6L5bF0yk72BGcPO7q95hKsHVZQDpgdzt0DeVM\/UixC2RCG",
+        "role": "student",
+        "name": "Abebe Shibiru",
+        "id": 14,
+        "student_id": "mwu0006",
+        "phone": "+251918342516",
+        "registered_at": "2026-02-06 14:28:58",
+        "status": "approved",
+        "approved_by": "sisay.tadesse@mwu.edu.et",
+        "approved_at": "2026-02-06 14:30:04",
+        "password_reset_at": "2026-02-06 18:22:32",
+        "password_reset_by": "sisay.tadesse@mwu.edu.et"
+    },
+    "game@student.mwu.edu.et": {
+        "password": "gam123",
+        "role": "student",
+        "name": "Gamachis Bulti",
+        "id": 15,
+        "student_id": "mwu0007",
+        "phone": "+251911111112",
+        "registered_at": "2026-02-06 18:11:33",
+        "status": "approved",
+        "approved_by": "sisay.tadesse@mwu.edu.et",
+        "approved_at": "2026-02-06 18:12:48"
+    },
+    "kidar@student.mwu.edu.et": {
+        "password": "kid123",
+        "role": "student",
+        "name": "Kidar gud",
+        "id": 8,
+        "student_id": "mwu001",
+        "phone": "+251911111113",
+        "registered_at": "2026-02-08 11:31:19",
+        "status": "approved",
+        "approved_by": "sisay.tadesse@mwu.edu.et",
+        "approved_at": "2026-02-08 11:33:21"
+    }
+}

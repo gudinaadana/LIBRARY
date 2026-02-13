@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MWU Online Library Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .role-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.25rem;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table-content {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-borrowed {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-overdue {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .role-specific {
+            border-left: 4px solid #3498db;
+            background: linear-gradient(90deg, rgba(52, 152, 219, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>📚 MWU Online Library Management System</h1>
+        <div class="user-info">
+            <span class="role-badge" id="roleBadge">Role</span>
+            <span id="userWelcome">Welcome, User!</span>
+            <button class="btn btn-warning" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalBooks">15</div>
+                <div class="stat-label">Total Books</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="availableBooks">12</div>
+                <div class="stat-label">Available Books</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="borrowedBooks">3</div>
+                <div class="stat-label">Borrowed Books</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalMembers">25</div>
+                <div class="stat-label">Library Members</div>
+            </div>
+        </div>
+
+        <!-- Role-based Dashboard -->
+        <div id="dashboardContent">
+            <!-- Content will be loaded based on user role -->
+        </div>
+
+        <!-- Data Display Area -->
+        <div class="data-table">
+            <div class="table-header">
+                <h3 id="tableTitle">📊 System Overview</h3>
+            </div>
+            <div class="table-content">
+                <div id="dataContent" style="padding: 2rem; text-align: center; color: #6c757d;">
+                    <p>Welcome to MWU Online Library Management System</p>
+                    <p>Select an option above to view data</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = {};
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.name && user.role) {
+                currentUser = user;
+                document.getElementById('userWelcome').textContent = 'Welcome, ' + user.name;
+                document.getElementById('roleBadge').textContent = user.role.toUpperCase();
+                loadRoleBasedDashboard(user.role);
+            } else {
+                window.location.href = '/';
+            }
+        });
+
+        function loadRoleBasedDashboard(role) {
+            switch(role) {
+                case 'admin':
+                    loadAdminDashboard();
+                    break;
+                case 'librarian':
+                    loadLibrarianDashboard();
+                    break;
+                case 'student':
+                    loadMemberDashboard();
+                    break;
+                default:
+                    loadDefaultDashboard();
+            }
+        }
+
+        function loadAdminDashboard() {
+            var html = '<div class="dashboard-grid">';
+            html += '<div class="card role-specific">';
+            html += '<h3>👥 User Account Management</h3>';
+            html += '<p>Manage user accounts and access control</p>';
+            html += '<div>';
+            html += '<button class="btn btn-primary" onclick="manageUsers()">Manage Users</button>';
+            html += '<button class="btn btn-success" onclick="addUser()">Add New User</button>';
+            html += '<button class="btn btn-info" onclick="viewUserActivity()">User Activity</button>';
+            html += '</div>';
+            html += '</div>';
+            
+            html += '<div class="card role-specific">';
+            html += '<h3>🔒 System Access Control</h3>';
+            html += '<p>Control system access and permissions</p>';
+            html += '<div>';
+            html += '<button class="btn btn-warning" onclick="managePermissions()">Permissions</button>';
+            html += '<button class="btn btn-info" onclick="systemLogs()">System Logs</button>';
+            html += '</div>';
+            html += '</div>';
+            
+            html += '<div class="card role-specific">';
+            html += '<h3>🛡️ Data Security</h3>';
+            html += '<p>Maintain data security and integrity</p>';
+            html += '<div>';
+            html += '<button class="btn btn-primary" onclick="securitySettings()">Security Settings</button>';
+            html += '<button class="btn btn-warning" onclick="dataIntegrity()">Data Integrity</button>';
+            html += '</div>';
+            html += '</div>';
+            
+            html += '<div class="card role-specific">';
+            html += '<h3>💾 System Backup & Recovery</h3>';
+            html += '<p>Perform system backup and recovery operations</p>';
+            html += '<div>';
+            html += '<button class="btn btn-success" onclick="createBackup()">Create Backup</button>';
+            html += '<button class="btn btn-warning" onclick="restoreSystem()">Restore System</button>';
+            html += '<button class="btn btn-info" onclick="backupHistory()">Backup History</button>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            
+            document.getElementById('dashboardContent').innerHTML = html;
+        }
+
+        function loadLibrarianDashboard() {
+            var html = '<div class="dashboard-grid">';
+            html += '<div class="card role-specific">';
+            html += '<h3>📚 Add New Books</h3>';
+            html += '<p>Add new books to the library system</p>';
+            html += '<div>';
+            html += '<button class="btn btn-success" onclick="addNewBook()">Add New Book</button>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            
+            document.getElementById('dashboardContent').innerHTML = html;
+        }
+
+        function loadMemberDashboard() {
+            var html = '<div class="dashboard-grid">';
+            html += '<div class="card role-specific">';
+            html += '<h3>🔍 Search Available Books</h3>';
+            html += '<p>Search for books available in the library</p>';
+            html += '<div>';
+            html += '<button class="btn btn-primary" onclick="searchBooks()">Search Books</button>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            
+            document.getElementById('dashboardContent').innerHTML = html;
+        }
+
+        // WORKING ADMIN FUNCTIONS
+        function manageUsers() {
+            document.getElementById('tableTitle').textContent = '👥 User Management';
+            var html = '<div style="padding: 1rem;">';
+            html += '<h4>System Users</h4>';
+            html += '<button class="btn btn-success" onclick="addUser()" style="margin-bottom: 1rem;">Add New User</button>';
+            html += '<table>';
+            html += '<thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>';
+            html += '<tbody>';
+            html += '<tr><td>Dr. Sisay Tadesse</td><td>sisay.tadesse@mwu.edu.et</td><td>Administrator</td><td><span class="status-badge status-available">ACTIVE</span></td><td><button class="btn btn-primary">Edit</button></td></tr>';
+            html += '<tr><td>Ato Mulugeta Bekele</td><td>mulugeta.bekele@mwu.edu.et</td><td>Librarian</td><td><span class="status-badge status-available">ACTIVE</span></td><td><button class="btn btn-primary">Edit</button></td></tr>';
+            html += '<tr><td>Hanan Mohammed</td><td>hanan.mohammed@student.mwu.edu.et</td><td>Student</td><td><span class="status-badge status-available">ACTIVE</span></td><td><button class="btn btn-primary">Edit</button></td></tr>';
+            html += '</tbody></table></div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function addUser() {
+            document.getElementById('tableTitle').textContent = '👤 Add New User';
+            var html = '<div style="padding: 2rem;">';
+            html += '<h4>Add New User to System</h4>';
+            html += '<form style="max-width: 600px;">';
+            html += '<div style="margin-bottom: 1rem;"><label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Full Name:</label>';
+            html += '<input type="text" id="userName" placeholder="Enter full name" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></div>';
+            html += '<div style="margin-bottom: 1rem;"><label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Email Address:</label>';
+            html += '<input type="email" id="userEmail" placeholder="user@mwu.edu.et" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></div>';
+            html += '<div style="margin-bottom: 1rem;"><label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Role:</label>';
+            html += '<select id="userRole" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"><option value="student">Student</option><option value="librarian">Librarian</option><option value="admin">Administrator</option></select></div>';
+            html += '<div style="margin-bottom: 1rem;"><label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Student ID:</label>';
+            html += '<input type="text" id="studentId" placeholder="STU001" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></div>';
+            html += '<div style="margin-bottom: 1rem;"><label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Phone Number:</label>';
+            html += '<input type="tel" id="userPhone" placeholder="+251911234567" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></div>';
+            html += '<div style="margin-bottom: 1rem;"><label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Password:</label>';
+            html += '<input type="password" id="userPassword" placeholder="Enter password" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></div>';
+            html += '<button type="button" class="btn btn-success" onclick="createUser()">Create User</button>';
+            html += '<button type="button" class="btn btn-secondary" onclick="manageUsers()" style="margin-left: 1rem;">Cancel</button>';
+            html += '</form></div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function createUser() {
+            var name = document.getElementById('userName').value;
+            var email = document.getElementById('userEmail').value;
+            var role = document.getElementById('userRole').value;
+            var studentId = document.getElementById('studentId').value;
+            var phone = document.getElementById('userPhone').value;
+            var password = document.getElementById('userPassword').value;
+            
+            if (!name || !email || !password) {
+                alert('❌ Please fill in all required fields');
+                return;
+            }
+            
+            fetch('/api.php/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password,
+                    confirm_password: password,
+                    student_id: studentId,
+                    phone: phone,
+                    role: role
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.message && result.message.includes('successful')) {
+                    alert('✅ User "' + name + '" created successfully!');
+                    manageUsers();
+                } else {
+                    alert('❌ Error: ' + (result.message || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                alert('❌ Network error: ' + error.message);
+            });
+        }
+
+        function viewUserActivity() {
+            document.getElementById('tableTitle').textContent = '📊 User Activity Monitor';
+            var html = '<div style="padding: 1rem;">';
+            html += '<h4>System Activity Overview</h4>';
+            html += '<table><thead><tr><th>User</th><th>Activity</th><th>Time</th><th>Status</th></tr></thead><tbody>';
+            html += '<tr><td>Hanan Mohammed</td><td>Book Borrowed</td><td>10:30 AM</td><td><span class="status-badge status-available">Success</span></td></tr>';
+            html += '<tr><td>Tolasa Bekele</td><td>Login</td><td>10:15 AM</td><td><span class="status-badge status-available">Success</span></td></tr>';
+            html += '</tbody></table></div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function managePermissions() {
+            document.getElementById('tableTitle').textContent = '🔒 System Permissions Management';
+            var html = '<div style="padding: 1rem;">';
+            html += '<h4>Access Control & Permissions</h4>';
+            html += '<table><thead><tr><th>Role</th><th>Users</th><th>Permissions</th><th>Status</th></tr></thead><tbody>';
+            html += '<tr><td>Administrator</td><td>1</td><td>Full System Access</td><td><span class="status-badge status-available">Active</span></td></tr>';
+            html += '<tr><td>Librarian</td><td>2</td><td>Book Management</td><td><span class="status-badge status-available">Active</span></td></tr>';
+            html += '</tbody></table></div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function systemLogs() {
+            document.getElementById('tableTitle').textContent = '📋 System Logs';
+            var html = '<div style="padding: 1rem;">';
+            html += '<h4>System Activity Logs</h4>';
+            html += '<table><thead><tr><th>Timestamp</th><th>Event</th><th>User</th></tr></thead><tbody>';
+            html += '<tr><td>2026-02-03 10:45:23</td><td>User Login</td><td>hanan.mohammed@student.mwu.edu.et</td></tr>';
+            html += '<tr><td>2026-02-03 09:15:42</td><td>Book Added</td><td>mulugeta.bekele@mwu.edu.et</td></tr>';
+            html += '</tbody></table></div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function securitySettings() {
+            document.getElementById('tableTitle').textContent = '🛡️ Security Settings';
+            var html = '<div style="padding: 2rem;">';
+            html += '<h4>System Security Configuration</h4>';
+            html += '<p>Configure password policies, session settings, and security features.</p>';
+            html += '<button class="btn btn-success" onclick="alert(\'Security settings saved!\')">Save Settings</button>';
+            html += '</div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function dataIntegrity() {
+            document.getElementById('tableTitle').textContent = '🔍 Data Integrity Check';
+            var html = '<div style="padding: 1rem;">';
+            html += '<h4>Database Integrity Status</h4>';
+            html += '<p>✅ User Data: PASSED</p>';
+            html += '<p>✅ Book Records: PASSED</p>';
+            html += '<p>⚠️ Borrow Records: WARNING</p>';
+            html += '<button class="btn btn-primary" onclick="alert(\'Integrity check completed!\')">Run Check</button>';
+            html += '</div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function createBackup() {
+            document.getElementById('tableTitle').textContent = '💾 Create System Backup';
+            var html = '<div style="padding: 2rem;">';
+            html += '<h4>System Backup Creation</h4>';
+            html += '<p>Create a full system backup including database and files.</p>';
+            html += '<button class="btn btn-success" onclick="alert(\'✅ Backup created successfully!\')">Create Backup</button>';
+            html += '</div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function restoreSystem() {
+            document.getElementById('tableTitle').textContent = '🔄 System Restore';
+            var html = '<div style="padding: 2rem;">';
+            html += '<h4>System Restore</h4>';
+            html += '<p>⚠️ Warning: This will overwrite current data!</p>';
+            html += '<button class="btn btn-warning" onclick="if(confirm(\'Are you sure?\')) alert(\'System restore initiated!\')">Restore System</button>';
+            html += '</div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function backupHistory() {
+            document.getElementById('tableTitle').textContent = '📋 Backup History';
+            var html = '<div style="padding: 1rem;">';
+            html += '<h4>System Backup History</h4>';
+            html += '<table><thead><tr><th>Date</th><th>Type</th><th>Status</th></tr></thead><tbody>';
+            html += '<tr><td>2026-02-03</td><td>Full Backup</td><td><span class="status-badge status-available">Success</span></td></tr>';
+            html += '</tbody></table></div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        // Other functions
+        function addNewBook() {
+            document.getElementById('tableTitle').textContent = '📚 Add New Book';
+            var html = '<div style="padding: 2rem;">';
+            html += '<h4>Add New Book to Library</h4>';
+            html += '<p>Book management functionality</p>';
+            html += '</div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function searchBooks() {
+            document.getElementById('tableTitle').textContent = '🔍 Search Books';
+            var html = '<div style="padding: 2rem;">';
+            html += '<h4>Search Available Books</h4>';
+            html += '<p>Book search functionality</p>';
+            html += '</div>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+[
+    {
+        "id": 1,
+        "title": "Afaan Oromoo: Seerluga fi Barreeffama",
+        "author": "Baqqalaa Garbaa Hundessaa",
+        "isbn": "9780743273565",
+        "category_id": 6,
+        "quantity": 5,
+        "available_quantity": 4,
+        "description": "Comprehensive guide to Afaan Oromoo grammar and literature",
+        "publication_year": 2020,
+        "publisher": "Finfinnee University Press",
+        "category": {
+            "name": "Education"
+        },
+        "created_at": "2026-01-01 00:00:00"
+    },
+    {
+        "id": 2,
+        "title": "Mathematics: Calculus and Linear Algebra",
+        "author": "Dereje Hailu Wayessa",
+        "isbn": "9780132350884",
+        "category_id": 2,
+        "quantity": 3,
+        "available_quantity": 0,
+        "description": "Advanced mathematics for engineering students",
+        "publication_year": 2019,
+        "publisher": "Oromia Science Academy",
+        "category": {
+            "name": "Science"
+        },
+        "created_at": "2026-01-01 00:00:00"
+    },
+    {
+        "id": 3,
+        "title": "Chemistry: Organic and Inorganic Compounds",
+        "author": "Gemechu Megersa Daba",
+        "isbn": "9780553380163",
+        "category_id": 2,
+        "quantity": 4,
+        "available_quantity": 2,
+        "description": "Comprehensive chemistry textbook for university students",
+        "publication_year": 2021,
+        "publisher": "Oromia Science Academy",
+        "category": {
+            "name": "Science"
+        },
+        "created_at": "2026-01-01 00:00:00"
+    },
+    {
+        "id": 4,
+        "title": "Computer Organization and Architecture (COA)",
+        "author": "Almaz Negassa Hundessa",
+        "isbn": "9780061120084",
+        "category_id": 3,
+        "quantity": 6,
+        "available_quantity": 5,
+        "description": "Computer hardware and system architecture fundamentals",
+        "publication_year": 2022,
+        "publisher": "Oromia Technology Institute",
+        "category": {
+            "name": "Technology"
+        },
+        "created_at": "2026-01-01 00:00:00"
+    },
+    {
+        "id": 5,
+        "title": "Software Engineering: Design and Development",
+        "author": "Bultum Chala Regassa",
+        "isbn": "9781451648539",
+        "category_id": 3,
+        "quantity": 2,
+        "available_quantity": 2,
+        "description": "Modern software development methodologies and practices",
+        "publication_year": 2023,
+        "publisher": "Adama Institute of Technology",
+        "category": {
+            "name": "Technology"
+        },
+        "created_at": "2026-01-01 00:00:00"
+    },
+    {
+        "id": 9,
+        "title": "Software",
+        "author": "Pro. Gammee Boos",
+        "isbn": "978-1",
+        "category_id": 0,
+        "quantity": 7,
+        "available_quantity": 3,
+        "description": "",
+        "publication_year": 2026,
+        "publisher": "",
+        "category": {
+            "name": "Unknown"
+        },
+        "created_at": "2026-02-03 09:42:17",
+        "updated_at": "2026-02-06 08:08:35"
+    },
+    {
+        "id": 10,
+        "title": "Database",
+        "author": "Pro. phodan Boos",
+        "isbn": "978-1",
+        "category_id": 3,
+        "quantity": 4,
+        "available_quantity": 4,
+        "description": "database course is use in many system ",
+        "publication_year": 2019,
+        "publisher": "Computer company",
+        "category": {
+            "name": "Technology"
+        },
+        "created_at": "2026-02-03 09:54:29"
+    },
+    {
+        "id": 11,
+        "title": "Micro",
+        "author": "Pro. phodan jo",
+        "isbn": "978-3",
+        "category_id": 2,
+        "quantity": 12,
+        "available_quantity": 12,
+        "description": "Studies about ............",
+        "publication_year": 2016,
+        "publisher": "Biologically Edu",
+        "category": {
+            "name": "Science"
+        },
+        "created_at": "2026-02-05 18:07:04"
+    }
+]

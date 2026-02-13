@@ -1,59 +1,281 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MWU Online Library Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A complete library management system for Madda Walabu University built with **Laravel Backend API** + **Next.js Frontend** architecture, featuring role-based access control, student registration, penalty system, and real-time notifications.
 
-## About Laravel
+## 🏗️ Architecture
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
+Next.js Frontend (Port 3000)    ←→    Laravel Backend API (Port 8000)    ←→    MySQL Database
+     (React/TypeScript)                      (PHP/Laravel)                        (XAMPP)
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Quick Start
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Method 1 - Using Batch Files (Recommended)
 
-## Learning Laravel
+**Step 1: Start Laravel Backend**
+```
+START_LIBRARY.bat
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+**Step 2: Start Next.js Frontend (in new terminal)**
+```
+START_FRONTEND.bat
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Step 3: Open Browser**
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:8000/api`
 
-## Laravel Sponsors
+### Method 2 - Manual Commands
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Backend (Terminal 1):**
+```cmd
+cd C:\xampp3\htdocs\NewLaravel
+php -S localhost:8000 -t public
+```
 
-### Premium Partners
+**Frontend (Terminal 2):**
+```cmd
+cd C:\xampp3\htdocs\NewLaravel\frontend
+npm install
+npm run dev
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🧹 Clean Up (Optional)
 
-## Contributing
+To remove the old duplicate folder (if permission issues occur, restart your computer first):
+```cmd
+rmdir /s /q library-system
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 👥 User Accounts
 
-## Code of Conduct
+### Default Staff:
+- **Admin**: `sisay.tadesse@mwu.edu.et` / `password123` (Chaltu Daba Gemechu)
+- **Librarian**: `mulugeta.bekele@mwu.edu.et` / `password123` (Tolasa Bekele Hundessa)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Students:
+- **Sample**: `hanan.mohammed@student.mwu.edu.et` / `password123` (Bontu Girma Negassa)
+- **New Students**: Can register using the registration form
 
-## Security Vulnerabilities
+## 🎯 Features
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 👨‍💼 Administrator:
+- User account management
+- System access control
+- Data security management
+- System backup & recovery
 
-## License
+### 📚 Librarian:
+- Add/update books and categories
+- Issue books to members
+- Accept returned books
+- Real-time notifications for borrowed/overdue books
+- Force return overdue books
+- **Penalty Management**: Process payments, waive penalties
+- **Student Activity Tracking**: Monitor all student activities
+- Generate reports
+- Overdue book management
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 🎓 Students:
+- Search available books (auto-search as you type)
+- Borrow books (max 5 books, blocked if suspended)
+- **Renew books** (once per book, 14-day extension)
+- Return books (disabled for overdue)
+- View borrowing history with renewal information
+- **Penalty Status**: View outstanding penalties and account status
+- Register new accounts
+
+## 💰 Penalty System
+
+### Automatic Penalty Calculation:
+- **50 ETB per day** overdue (minimum 200 ETB penalty)
+- **Account suspension** until penalties are paid
+- **Borrowing blocked** for suspended accounts
+
+### Penalty Management:
+- **Students**: View penalty status and payment instructions
+- **Librarians**: Process payments, waive penalties, view statistics
+- **Automatic logging**: All penalty activities tracked
+
+### Payment Process:
+1. Student visits library in person
+2. Librarian processes payment in system
+3. Account automatically reactivated
+4. Student can resume borrowing
+
+## 📊 Activity Tracking
+
+### Automatic Tracking:
+- Student registration
+- Login activities
+- Book borrowing
+- Book returns
+- Penalty creation and payments
+
+### Manual Logging (Librarians):
+- Library orientation sessions
+- Special interactions
+- Issues or concerns
+- Custom activities
+
+## 📁 Project Structure
+
+### Laravel Backend (`/`)
+```
+app/
+├── Http/Controllers/
+│   ├── AuthController.php
+│   ├── BookController.php
+│   ├── CategoryController.php
+│   └── BorrowController.php
+├── Models/
+│   ├── User.php
+│   ├── Book.php
+│   ├── Category.php
+│   └── Borrow.php
+database/
+├── migrations/
+└── seeders/
+routes/
+├── api.php
+└── web.php
+public/
+├── api.php (Main API handler)
+├── student_penalties.json (Penalty data)
+├── student_activities.json (Activity logs)
+└── librarian_notifications.json (Notifications)
+```
+
+### Next.js Frontend (`/frontend`)
+```
+app/
+├── page.tsx (Login/Register)
+├── dashboard/
+│   └── page.tsx (Role-based Dashboard with Penalty UI)
+├── layout.tsx
+└── globals.css
+lib/
+└── api.ts (Axios configuration)
+```
+
+## 🔗 API Endpoints
+
+### Authentication
+- `POST /api/login` - User login
+- `POST /api/register` - Student registration
+- `POST /api/logout` - User logout
+- `GET /api/user` - Get current user
+
+### Books
+- `GET /api/books` - Get all books (with search/filter)
+- `POST /api/books` - Create book (Librarian/Admin)
+- `PUT /api/books/{id}` - Update book (Librarian/Admin)
+- `DELETE /api/books/{id}` - Delete book (Librarian/Admin)
+
+### Categories
+- `GET /api/categories` - Get all categories
+- `POST /api/categories` - Create category (Librarian/Admin)
+
+### Borrows
+- `GET /api/borrows` - Get all borrows
+- `POST /api/borrows` - Borrow book (checks suspension status)
+- `POST /api/return` - Return book (creates penalty if overdue)
+- `POST /api/renew` - Renew book (extends due date by 14 days)
+- `GET /api/notifications` - Get borrow notifications
+
+### Penalties (NEW)
+- `GET /api/penalties` - Get penalties (filter by user/status)
+- `POST /api/penalties` - Process penalty payment
+- `GET /api/user-status` - Check user suspension status
+
+### Activities (NEW)
+- `GET /api/activities` - Get student activities (filter by user/date)
+- `POST /api/activities` - Log manual activity (Librarian)
+- `GET /api/librarian-notifications` - Get activity notifications
+
+## 🧪 API Testing with Postman
+
+1. Import the collection: `postman/MWU_Library_API.postman_collection.json`
+2. Set environment variables:
+   - `base_url`: `http://localhost:8000`
+   - `auth_token`: (will be set after login)
+3. Test authentication endpoints first
+4. Use the token for protected endpoints
+
+## 🔔 Real-time Notifications
+
+### Librarians see:
+- **Library Activities**: New borrows, overdue books
+- **Student Activities**: Registration, login, manual entries
+- **Auto-refresh**: Every 30 seconds
+- **Priority indicators**: High priority for overdue items
+
+### Students see:
+- **Account status**: Active/Suspended
+- **Penalty information**: Outstanding amounts
+- **Borrowing restrictions**: Clear suspension messages
+
+## ⚠️ Overdue & Penalty Management
+
+### Student Experience:
+- **Cannot borrow** if account suspended
+- **Cannot return overdue books** without librarian
+- **Clear penalty information** with payment instructions
+- **Account status dashboard** showing all penalties
+
+### Librarian Tools:
+- **Force return** overdue books (creates penalty)
+- **Process payments** (cash/check/card)
+- **Waive penalties** when appropriate
+- **Penalty statistics** and reporting
+- **Account reactivation** after payment
+
+## 🛠️ Technology Stack
+
+### Backend:
+- **Laravel 10** - PHP Framework
+- **Laravel Sanctum** - API Authentication
+- **MySQL** - Database (via XAMPP)
+- **PHP 8.1+** - Programming Language
+- **JSON File Storage** - For rapid development
+
+### Frontend:
+- **Next.js 14** - React Framework
+- **TypeScript** - Type Safety
+- **Tailwind CSS** - Styling
+- **Axios** - HTTP Client
+
+### Development Tools:
+- **Postman** - API Testing
+- **XAMPP** - Local Development Environment
+
+## 📊 Database Schema
+
+### Tables:
+- `users` - Admin, Librarian, Student accounts
+- `categories` - Book categories
+- `books` - Book information with availability
+- `borrows` - Borrowing records with status tracking
+- `personal_access_tokens` - API authentication tokens
+
+### JSON Data Files:
+- `student_penalties.json` - Penalty records
+- `student_activities.json` - Activity logs
+- `librarian_notifications.json` - Notification queue
+- `registered_users.json` - Student registrations
+- `borrowed_books.json` - Borrow records
+
+## 🎓 Ready to Use!
+
+Your MWU Online Library Management System is complete with:
+- ✅ **Penalty System** with automatic calculation and account suspension
+- ✅ **Activity Tracking** for comprehensive student monitoring
+- ✅ **Real-time Notifications** for librarians
+- ✅ **Account Management** with suspension/reactivation workflow
+- ✅ **Auto-search** functionality for books
+- ✅ **Role-based Access Control** with proper authentication
+- ✅ **Production-ready** Laravel + Next.js architecture
+
+The system now handles the complete library workflow including penalty management and student account suspension as requested!

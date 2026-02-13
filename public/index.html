@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MWU Online Library Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .header h2 {
+            color: #3498db;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .login-form {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .credentials {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        .credentials h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .credentials p {
+            color: #6c757d;
+            margin-bottom: 10px;
+            font-family: monospace;
+            font-size: 0.9em;
+            background: white;
+            padding: 8px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Madda Walabu University</h1>
+            <h2>Online Library Management System</h2>
+        </div>
+
+        <div id="loginAlert" class="alert alert-error hidden">
+            Login failed
+        </div>
+
+        <div id="registerAlert" class="alert alert-success hidden">
+            Registration successful
+        </div>
+
+        <!-- Login/Register Toggle -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="loginTab" class="btn" style="background: #3498db; color: white; margin-right: 10px;" onclick="showLogin()">Login</button>
+            <button id="registerTab" class="btn" style="background: #6c757d; color: white;" onclick="showRegister()">Register New Student</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="librarian">Librarian</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn">Sign in</button>
+        </form>
+
+        <!-- Registration Form -->
+        <form id="registerForm" class="login-form hidden">
+            <div class="form-group">
+                <label for="regName">Full Name</label>
+                <input type="text" id="regName" name="name" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="regEmail">Email Address</label>
+                <input type="email" id="regEmail" name="email" placeholder="your.name@student.mwu.edu.et" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="regStudentId">Student ID</label>
+                <input type="text" id="regStudentId" name="student_id" placeholder="Enter your student ID" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="regPhone">Phone Number</label>
+                <input type="tel" id="regPhone" name="phone" placeholder="Enter your phone number" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" name="password" placeholder="Create a password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="regConfirmPassword">Confirm Password</label>
+                <input type="password" id="regConfirmPassword" name="confirm_password" placeholder="Confirm your password" required>
+            </div>
+            
+            <button type="submit" class="btn" style="background: #27ae60;">Register as Student</button>
+        </form>
+
+        <div class="credentials">
+            <h3>Default Staff Credentials:</h3>
+            <p><strong>Admin:</strong> sisay.tadesse@mwu.edu.et / password123</p>
+            <p><strong>Librarian:</strong> mulugeta.bekele@mwu.edu.et / password123</p>
+            <p><strong>Sample Student:</strong> hanan.mohammed@student.mwu.edu.et / password123</p>
+            <p style="margin-top: 15px; color: #3498db;"><strong>New Students:</strong> Please register using the "Register New Student" tab above</p>
+        </div>
+    </div>
+
+    <script>
+        // Show/Hide Login and Register forms
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginTab').style.background = '#3498db';
+            document.getElementById('registerTab').style.background = '#6c757d';
+            document.getElementById('loginAlert').classList.add('hidden');
+            document.getElementById('registerAlert').classList.add('hidden');
+        }
+
+        function showRegister() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('loginTab').style.background = '#6c757d';
+            document.getElementById('registerTab').style.background = '#27ae60';
+            document.getElementById('loginAlert').classList.add('hidden');
+            document.getElementById('registerAlert').classList.add('hidden');
+        }
+
+        // Auto-fill credentials when role is selected
+        document.getElementById('role').addEventListener('change', function() {
+            const role = this.value;
+            const emailField = document.getElementById('email');
+            const passwordField = document.getElementById('password');
+            
+            switch(role) {
+                case 'admin':
+                    emailField.value = 'sisay.tadesse@mwu.edu.et';
+                    passwordField.value = 'password123';
+                    break;
+                case 'librarian':
+                    emailField.value = 'mulugeta.bekele@mwu.edu.et';
+                    passwordField.value = 'password123';
+                    break;
+                case 'student':
+                    emailField.value = 'hanan.mohammed@student.mwu.edu.et';
+                    passwordField.value = 'password123';
+                    break;
+                default:
+                    emailField.value = '';
+                    passwordField.value = '';
+            }
+        });
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            const alertDiv = document.getElementById('loginAlert');
+            
+            try {
+                const response = await fetch('/api.php/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alertDiv.className = 'alert alert-success';
+                    alertDiv.textContent = `Welcome ${result.user.name}! Redirecting to dashboard...`;
+                    alertDiv.classList.remove('hidden');
+                    
+                    // Store user data
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    localStorage.setItem('token', result.token);
+                    
+                    // Redirect to dashboard after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 2000);
+                } else {
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.textContent = 'Login failed - Invalid credentials or role mismatch';
+                    alertDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                alertDiv.className = 'alert alert-error';
+                alertDiv.textContent = 'Login failed - Server error';
+                alertDiv.classList.remove('hidden');
+            }
+        });
+
+        // Register form handler
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const data = {
+                name: form.regName.value,
+                email: form.regEmail.value,
+                student_id: form.regStudentId.value,
+                phone: form.regPhone.value,
+                password: form.regPassword.value,
+                confirm_password: form.regConfirmPassword.value
+            };
+            
+            const alertDiv = document.getElementById('registerAlert');
+            
+            // Email validation only - NO PASSWORD VALIDATION
+            if (!data.email.includes('@student.mwu.edu.et') && !data.email.includes('@mwu.edu.et')) {
+                alertDiv.className = 'alert alert-error';
+                alertDiv.textContent = 'Please use your MWU email address (@student.mwu.edu.et)';
+                alertDiv.classList.remove('hidden');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api.php/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alertDiv.className = 'alert alert-success';
+                    alertDiv.textContent = `Registration successful! Welcome ${result.user.name}. You can now login with your credentials.`;
+                    alertDiv.classList.remove('hidden');
+                    
+                    // Clear form
+                    document.getElementById('registerForm').reset();
+                    
+                    // Switch to login form after 3 seconds
+                    setTimeout(() => {
+                        showLogin();
+                        // Pre-fill login form with registered credentials
+                        document.getElementById('email').value = data.email;
+                        document.getElementById('role').value = 'student';
+                    }, 3000);
+                } else {
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.textContent = result.message || 'Registration failed';
+                    alertDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                alertDiv.className = 'alert alert-error';
+                alertDiv.textContent = 'Registration failed - Server error';
+                alertDiv.classList.remove('hidden');
+            }
+        });
+                
+                if (response.ok) {
+                    alertDiv.className = 'alert alert-success';
+                    alertDiv.textContent = `Registration successful! Welcome ${result.user.name}. You can now login with your credentials.`;
+                    alertDiv.classList.remove('hidden');
+                    
+                    // Clear form
+                    document.getElementById('registerForm').reset();
+                    
+                    // Switch to login form after 3 seconds
+                    setTimeout(() => {
+                        showLogin();
+                        // Pre-fill login form with registered credentials
+                        document.getElementById('email').value = data.email;
+                        document.getElementById('role').value = 'student';
+                    }, 3000);
+                } else {
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.textContent = result.message || 'Registration failed';
+                    alertDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                alertDiv.className = 'alert alert-error';
+                alertDiv.textContent = 'Registration failed - Server error';
+                alertDiv.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

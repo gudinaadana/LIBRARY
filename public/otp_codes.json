@@ -1,0 +1,20 @@
+[
+    {
+        "email": "abeb@student.mwu.edu.et",
+        "user_id": 14,
+        "user_name": "Abebe Shibiru",
+        "code": "201697",
+        "created_at": "2026-02-06 17:52:04",
+        "expires_at": "2026-02-06 17:57:04",
+        "verified": true
+    },
+    {
+        "email": "mulugeta.bekele@mwu.edu.et",
+        "user_id": 2,
+        "user_name": "Ato Mulugeta Bekele",
+        "code": "895324",
+        "created_at": "2026-02-06 17:53:48",
+        "expires_at": "2026-02-06 17:58:48",
+        "verified": false
+    }
+]

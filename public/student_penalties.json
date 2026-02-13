@@ -1,0 +1,32 @@
+[
+  {
+    "id": "PEN1738534800001",
+    "user_id": 3,
+    "user_email": "hanan.mohammed@student.mwu.edu.et",
+    "user_name": "Bontu Girma Negassa",
+    "borrow_id": "BRW1738534800002",
+    "book_title": "Mathematics: Calculus and Linear Algebra",
+    "overdue_days": 6,
+    "penalty_amount": 300,
+    "status": "paid",
+    "created_at": "2026-02-03 10:00:00",
+    "paid_at": "2026-02-03 12:00:00",
+    "payment_method": "cash",
+    "notes": "Penalty cleared for testing - paid 300 ETB"
+  },
+  {
+    "id": "PEN1738534800002",
+    "user_id": 3,
+    "user_email": "hanan.mohammed@student.mwu.edu.et",
+    "user_name": "Bontu Girma Negassa",
+    "borrow_id": "BRW1738534800003",
+    "book_title": "Data Structures and Algorithms",
+    "overdue_days": 12,
+    "penalty_amount": 600,
+    "status": "paid",
+    "created_at": "2026-01-28 14:30:00",
+    "paid_at": "2026-02-01 09:15:00",
+    "payment_method": "cash",
+    "notes": "Paid in full at library counter - 600 ETB"
+  }
+]
