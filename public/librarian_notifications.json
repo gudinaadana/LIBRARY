@@ -2182,5 +2182,31 @@
         "timestamp": "2026-03-08 20:05:55",
         "is_read": false,
         "priority": "normal"
+    },
+    {
+        "id": "NOT1773150820633",
+        "activity_id": "ACT1773150820126",
+        "user_id": 3,
+        "user_email": "hanan.mohammed@student.mwu.edu.et",
+        "user_name": "Hanan Mohammed",
+        "message": "Student logged in: Hanan Mohammed",
+        "type": "login",
+        "details": "Login time: 2026-03-10 14:53:40",
+        "timestamp": "2026-03-10 14:53:40",
+        "is_read": false,
+        "priority": "normal"
+    },
+    {
+        "id": "NOT1773159853745",
+        "activity_id": "ACT1773159853769",
+        "user_id": 3,
+        "user_email": "hanan.mohammed@student.mwu.edu.et",
+        "user_name": "Hanan Mohammed",
+        "message": "Student logged in: Hanan Mohammed",
+        "type": "login",
+        "details": "Login time: 2026-03-10 17:24:13",
+        "timestamp": "2026-03-10 17:24:13",
+        "is_read": false,
+        "priority": "normal"
     }
 ]
