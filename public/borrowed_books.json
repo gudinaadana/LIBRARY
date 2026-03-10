@@ -104,8 +104,10 @@
         "book_title": "Mathematics: Calculus and Linear Algebra",
         "borrowed_at": "2026-02-05 21:48:50",
         "due_date": "2026-02-19 21:48:50",
-        "status": "borrowed",
-        "is_overdue": false
+        "status": "return_pending",
+        "is_overdue": false,
+        "return_requested_at": "2026-02-16 05:06:59",
+        "overdue_days": 0
     },
     {
         "id": "BRW1770325902554",
@@ -163,11 +165,12 @@
         "book_title": "Afaan Oromoo: Seerluga fi Barreeffama",
         "borrowed_at": "2026-02-06 14:48:46",
         "due_date": "2026-02-20 14:48:46",
-        "status": "borrowed",
-        "is_overdue": false,
+        "status": "returned",
+        "is_overdue": true,
         "requested_at": "2026-02-06 14:48:46",
         "approved_by": "mulugeta.bekele@mwu.edu.et",
-        "approved_at": "2026-02-06 14:49:50"
+        "approved_at": "2026-02-06 14:49:50",
+        "returned_at": "2026-03-07 12:47:49"
     },
     {
         "id": "BRW1770386669641",
@@ -178,8 +181,8 @@
         "book_title": "Chemistry: Organic and Inorganic Compounds",
         "borrowed_at": "2026-02-06 15:04:29",
         "due_date": "2026-02-20 15:04:29",
-        "status": "borrowed",
-        "is_overdue": false,
+        "status": "overdue",
+        "is_overdue": true,
         "requested_at": "2026-02-06 15:04:29",
         "approved_by": "mulugeta.bekele@mwu.edu.et",
         "approved_at": "2026-02-06 18:59:12"
@@ -223,8 +226,8 @@
         "book_title": "Chemistry: Organic and Inorganic Compounds",
         "borrowed_at": "2026-02-06 17:53:27",
         "due_date": "2026-02-20 17:53:27",
-        "status": "borrowed",
-        "is_overdue": false,
+        "status": "overdue",
+        "is_overdue": true,
         "requested_at": "2026-02-06 17:53:27",
         "approved_by": "mulugeta.bekele@mwu.edu.et",
         "approved_at": "2026-02-08 07:03:45"
@@ -238,11 +241,13 @@
         "book_title": "Computer Organization and Architecture (COA)",
         "borrowed_at": "2026-02-06 18:06:29",
         "due_date": "2026-02-20 18:06:29",
-        "status": "pending",
+        "status": "return_pending",
         "is_overdue": false,
         "requested_at": "2026-02-06 18:06:29",
-        "approved_by": null,
-        "approved_at": null
+        "approved_by": "mulugeta.bekele@mwu.edu.et",
+        "approved_at": "2026-02-16 05:06:17",
+        "return_requested_at": "2026-02-16 05:07:55",
+        "overdue_days": 0
     },
     {
         "id": "BRW1770535575388",
@@ -253,9 +258,39 @@
         "book_title": "Afaan Oromoo: Seerluga fi Barreeffama",
         "borrowed_at": "2026-02-08 08:26:15",
         "due_date": "2026-02-22 08:26:15",
+        "status": "overdue",
+        "is_overdue": true,
+        "requested_at": "2026-02-08 08:26:15",
+        "approved_by": "mulugeta.bekele@mwu.edu.et",
+        "approved_at": "2026-03-08 19:09:20"
+    },
+    {
+        "id": "BRW1771214692515",
+        "user_id": 3,
+        "book_id": 1,
+        "user_email": "hanan.mohammed@student.mwu.edu.et",
+        "user_name": "Hanan Mohammed",
+        "book_title": "Afaan Oromoo: Seerluga fi Barreeffama",
+        "borrowed_at": "2026-02-16 05:04:52",
+        "due_date": "2026-03-02 05:04:52",
         "status": "pending",
         "is_overdue": false,
-        "requested_at": "2026-02-08 08:26:15",
+        "requested_at": "2026-02-16 05:04:52",
+        "approved_by": null,
+        "approved_at": null
+    },
+    {
+        "id": "BRW1772993310475",
+        "user_id": 3,
+        "book_id": 1,
+        "user_email": "hanan.mohammed@student.mwu.edu.et",
+        "user_name": "Hanan Mohammed",
+        "book_title": "Afaan Oromoo: Seerluga fi Barreeffama",
+        "borrowed_at": "2026-03-08 19:08:30",
+        "due_date": "2026-03-22 19:08:30",
+        "status": "pending",
+        "is_overdue": false,
+        "requested_at": "2026-03-08 19:08:30",
         "approved_by": null,
         "approved_at": null
     }

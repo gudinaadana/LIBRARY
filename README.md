@@ -1,6 +1,22 @@
-# MWU Online Library Management System
+# MWU DIGITAL LIBRARY
 
 A complete library management system for Madda Walabu University built with **Laravel Backend API** + **Next.js Frontend** architecture, featuring role-based access control, student registration, penalty system, and real-time notifications.
+
+## 🌐 GitHub Repository
+```
+https://github.com/gudinaadana/LIBRARY
+```
+
+## 📥 Quick Start for New Users
+
+```cmd
+git clone https://github.com/gudinaadana/LIBRARY.git
+cd LIBRARY
+composer install
+cd frontend && npm install
+```
+
+See `INSTALLATION.md` for complete setup instructions.
 
 ## 🏗️ Architecture
 

@@ -1,0 +1,36 @@
+#!/usr/bin/env php
+<?php
+// Artisan wrapper for backend folder
+// This allows running "php artisan serve" from backend folder
+
+// Change to parent directory
+chdir(__DIR__ . '/..');
+
+// Check if we're running the serve command
+if (isset($argv[1]) && $argv[1] === 'serve') {
+    // Get host and port
+    $host = '127.0.0.1';
+    $port = 8000;
+    
+    // Check for custom host/port
+    foreach ($argv as $key => $arg) {
+        if ($arg === '--host' && isset($argv[$key + 1])) {
+            $host = $argv[$key + 1];
+        }
+        if ($arg === '--port' && isset($argv[$key + 1])) {
+            $port = $argv[$key + 1];
+        }
+    }
+    
+    echo "\033[32m\n";
+    echo "   INFO  \033[0m Server running on [http://{$host}:{$port}].\n\n";
+    echo "  Press Ctrl+C to stop the server\n\n";
+    
+    // Start PHP built-in server
+    $command = "php -S {$host}:{$port} -t public";
+    passthru($command);
+    exit(0);
+}
+
+// For other commands, run the real artisan from parent directory
+require __DIR__ . '/../artisan';

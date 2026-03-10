@@ -4,16 +4,17 @@
         "title": "Afaan Oromoo: Seerluga fi Barreeffama",
         "author": "Baqqalaa Garbaa Hundessaa",
         "isbn": "9780743273565",
-        "category_id": 6,
-        "quantity": 5,
+        "category_id": 0,
+        "quantity": 9,
         "available_quantity": 4,
-        "description": "Comprehensive guide to Afaan Oromoo grammar and literature",
-        "publication_year": 2020,
-        "publisher": "Finfinnee University Press",
+        "description": "",
+        "publication_year": 2026,
+        "publisher": "",
         "category": {
-            "name": "Education"
+            "name": "Unknown"
         },
-        "created_at": "2026-01-01 00:00:00"
+        "created_at": "2026-01-01 00:00:00",
+        "updated_at": "2026-02-19 19:10:42"
     },
     {
         "id": 2,
@@ -54,7 +55,7 @@
         "isbn": "9780061120084",
         "category_id": 3,
         "quantity": 6,
-        "available_quantity": 5,
+        "available_quantity": 4,
         "description": "Computer hardware and system architecture fundamentals",
         "publication_year": 2022,
         "publisher": "Oromia Technology Institute",

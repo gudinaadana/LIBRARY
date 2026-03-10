@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MWU Online Library Management System</title>
+    <title>MWU DIGITAL LIBRARY</title>
     <style>
         * {
             margin: 0;
@@ -212,7 +212,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <h1>📚 MWU Online Library Management System</h1>
+        <h1>📚 MWU DIGITAL LIBRARY</h1>
         <div class="user-info">
             <span class="role-badge" id="roleBadge">Role</span>
             <span id="userWelcome">Welcome, User!</span>
@@ -253,7 +253,7 @@
             </div>
             <div class="table-content">
                 <div id="dataContent" style="padding: 2rem; text-align: center; color: #6c757d;">
-                    <p>Welcome to MWU Online Library Management System</p>
+                    <p>Welcome to MWU DIGITAL LIBRARY</p>
                     <p>Select an option above to view data</p>
                 </div>
             </div>
@@ -339,10 +339,12 @@
         function loadLibrarianDashboard() {
             var html = '<div class="dashboard-grid">';
             html += '<div class="card role-specific">';
-            html += '<h3>📚 Add New Books</h3>';
-            html += '<p>Add new books to the library system</p>';
+            html += '<h3>📚 Book Management</h3>';
+            html += '<p>Manage library books - add, edit, and delete</p>';
             html += '<div>';
             html += '<button class="btn btn-success" onclick="addNewBook()">Add New Book</button>';
+            html += '<button class="btn btn-primary" onclick="viewAllBooks()">View All Books</button>';
+            html += '<button class="btn btn-info" onclick="searchBooks()">Search Books</button>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -528,7 +530,195 @@
             document.getElementById('dataContent').innerHTML = html;
         }
 
-        // Other functions
+        // Book Management Functions
+        function viewAllBooks() {
+            document.getElementById('tableTitle').textContent = '📚 All Books';
+            
+            fetch('/api.php/books')
+                .then(response => response.json())
+                .then(books => {
+                    var html = '<div style="padding: 1rem;">';
+                    html += '<table><thead><tr>';
+                    html += '<th>ID</th><th>Title</th><th>Author</th><th>ISBN</th><th>Category</th><th>Quantity</th><th>Actions</th>';
+                    html += '</tr></thead><tbody>';
+                    
+                    if (books.length > 0) {
+                        books.forEach(book => {
+                            html += '<tr>';
+                            html += '<td>' + book.id + '</td>';
+                            html += '<td>' + book.title + '</td>';
+                            html += '<td>' + book.author + '</td>';
+                            html += '<td>' + book.isbn + '</td>';
+                            html += '<td>' + (book.category?.name || 'N/A') + '</td>';
+                            html += '<td>' + book.available_quantity + '/' + book.quantity + '</td>';
+                            html += '<td>';
+                            html += '<button class="btn btn-primary" style="padding: 0.5rem 1rem; margin: 0.2rem;" onclick="editBook(' + book.id + ')">Edit</button>';
+                            html += '<button class="btn btn-warning" style="padding: 0.5rem 1rem; margin: 0.2rem; background: #e74c3c;" onclick="deleteBook(' + book.id + ', \'' + book.title.replace(/'/g, "\\'") + '\')">Delete</button>';
+                            html += '</td>';
+                            html += '</tr>';
+                        });
+                    } else {
+                        html += '<tr><td colspan="7" style="text-align: center;">No books found</td></tr>';
+                    }
+                    
+                    html += '</tbody></table></div>';
+                    document.getElementById('dataContent').innerHTML = html;
+                })
+                .catch(error => {
+                    document.getElementById('dataContent').innerHTML = '<div style="padding: 2rem; color: red;">Error loading books</div>';
+                });
+        }
+
+        function editBook(bookId) {
+            // Fetch book details
+            fetch('/api.php/books')
+                .then(response => response.json())
+                .then(books => {
+                    const book = books.find(b => b.id == bookId);
+                    if (!book) {
+                        alert('Book not found');
+                        return;
+                    }
+                    
+                    document.getElementById('tableTitle').textContent = '✏️ Edit Book';
+                    var html = '<div style="padding: 2rem; max-width: 600px; margin: 0 auto;">';
+                    html += '<form id="editBookForm" onsubmit="submitEditBook(event, ' + bookId + ')">';
+                    
+                    html += '<div style="margin-bottom: 1rem;">';
+                    html += '<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Title:</label>';
+                    html += '<input type="text" name="title" value="' + book.title + '" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">';
+                    html += '</div>';
+                    
+                    html += '<div style="margin-bottom: 1rem;">';
+                    html += '<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Author:</label>';
+                    html += '<input type="text" name="author" value="' + book.author + '" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">';
+                    html += '</div>';
+                    
+                    html += '<div style="margin-bottom: 1rem;">';
+                    html += '<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">ISBN:</label>';
+                    html += '<input type="text" name="isbn" value="' + book.isbn + '" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">';
+                    html += '</div>';
+                    
+                    html += '<div style="margin-bottom: 1rem;">';
+                    html += '<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Category:</label>';
+                    html += '<select name="category_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">';
+                    html += '<option value="1" ' + (book.category_id == 1 ? 'selected' : '') + '>Literature</option>';
+                    html += '<option value="2" ' + (book.category_id == 2 ? 'selected' : '') + '>Science</option>';
+                    html += '<option value="3" ' + (book.category_id == 3 ? 'selected' : '') + '>Technology</option>';
+                    html += '<option value="4" ' + (book.category_id == 4 ? 'selected' : '') + '>History</option>';
+                    html += '<option value="5" ' + (book.category_id == 5 ? 'selected' : '') + '>Biography</option>';
+                    html += '<option value="6" ' + (book.category_id == 6 ? 'selected' : '') + '>Education</option>';
+                    html += '<option value="7" ' + (book.category_id == 7 ? 'selected' : '') + '>Business</option>';
+                    html += '<option value="8" ' + (book.category_id == 8 ? 'selected' : '') + '>Health</option>';
+                    html += '</select>';
+                    html += '</div>';
+                    
+                    html += '<div style="margin-bottom: 1rem;">';
+                    html += '<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Quantity:</label>';
+                    html += '<input type="number" name="quantity" value="' + book.quantity + '" min="1" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">';
+                    html += '</div>';
+                    
+                    html += '<div style="margin-bottom: 1rem;">';
+                    html += '<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Description:</label>';
+                    html += '<textarea name="description" rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">' + (book.description || '') + '</textarea>';
+                    html += '</div>';
+                    
+                    html += '<div style="margin-bottom: 1rem;">';
+                    html += '<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Publication Year:</label>';
+                    html += '<input type="number" name="publication_year" value="' + (book.publication_year || new Date().getFullYear()) + '" min="1800" max="' + new Date().getFullYear() + '" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">';
+                    html += '</div>';
+                    
+                    html += '<div style="margin-bottom: 1rem;">';
+                    html += '<label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Publisher:</label>';
+                    html += '<input type="text" name="publisher" value="' + (book.publisher || '') + '" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">';
+                    html += '</div>';
+                    
+                    html += '<div style="display: flex; gap: 1rem; margin-top: 2rem;">';
+                    html += '<button type="submit" class="btn btn-primary" style="flex: 1;">Update Book</button>';
+                    html += '<button type="button" class="btn btn-warning" onclick="viewAllBooks()" style="flex: 1; background: #6c757d;">Cancel</button>';
+                    html += '</div>';
+                    
+                    html += '</form>';
+                    html += '</div>';
+                    
+                    document.getElementById('dataContent').innerHTML = html;
+                })
+                .catch(error => {
+                    alert('Error loading book details');
+                });
+        }
+
+        function submitEditBook(event, bookId) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            const data = {
+                book_id: bookId,
+                title: formData.get('title'),
+                author: formData.get('author'),
+                isbn: formData.get('isbn'),
+                category_id: formData.get('category_id'),
+                quantity: formData.get('quantity'),
+                description: formData.get('description'),
+                publication_year: formData.get('publication_year'),
+                publisher: formData.get('publisher'),
+                librarian_id: currentUser.id,
+                librarian_email: currentUser.email,
+                librarian_name: currentUser.name
+            };
+            
+            fetch('/api.php/books/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                alert(result.message || 'Book updated successfully!');
+                viewAllBooks();
+            })
+            .catch(error => {
+                alert('Error updating book');
+            });
+        }
+
+        function deleteBook(bookId, bookTitle) {
+            if (!confirm('Are you sure you want to delete "' + bookTitle + '"?\n\nThis action cannot be undone.')) {
+                return;
+            }
+            
+            const data = {
+                book_id: bookId,
+                librarian_id: currentUser.id,
+                librarian_email: currentUser.email,
+                librarian_name: currentUser.name
+            };
+            
+            fetch('/api.php/books/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.message) {
+                    alert(result.message);
+                    if (result.deleted_book) {
+                        viewAllBooks();
+                    }
+                }
+            })
+            .catch(error => {
+                alert('Error deleting book');
+            });
+        }
+
         function addNewBook() {
             document.getElementById('tableTitle').textContent = '📚 Add New Book';
             var html = '<div style="padding: 2rem;">';

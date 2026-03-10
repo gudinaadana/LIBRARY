@@ -418,5 +418,77 @@
         "timestamp": "2026-02-08 11:33:21",
         "date": "2026-02-08",
         "time": "11:33:21"
+    },
+    {
+        "id": "SYS1771075042295",
+        "user_id": 2,
+        "user_email": "mulugeta.bekele@mwu.edu.et",
+        "user_name": "Ato Mulugeta Bekele",
+        "activity": "Book updated: 'Afaan Oromoo: Seerluga fi Barreeffama' by Baqqalaa Garbaa Hundessaa",
+        "type": "book_update",
+        "details": "Book ID: 1, ISBN: 9780743273565",
+        "timestamp": "2026-02-14 14:17:22",
+        "date": "2026-02-14",
+        "time": "14:17:22"
+    },
+    {
+        "id": "SYS1771214692506",
+        "user_id": 3,
+        "user_email": "hanan.mohammed@student.mwu.edu.et",
+        "user_name": "Hanan Mohammed",
+        "activity": "\ud83d\udd14 BORROW REQUEST: Hanan Mohammed wants to borrow 'Afaan Oromoo: Seerluga fi Barreeffama'",
+        "type": "borrow_request",
+        "details": "Student: Hanan Mohammed (ID: 3), Book: Afaan Oromoo: Seerluga fi Barreeffama - PENDING LIBRARIAN APPROVAL",
+        "timestamp": "2026-02-16 05:04:52",
+        "date": "2026-02-16",
+        "time": "05:04:52"
+    },
+    {
+        "id": "SYS1771214819138",
+        "user_id": 5,
+        "user_email": "sinan@student.mwu.edu.et",
+        "user_name": "",
+        "activity": "\ud83d\udd14 RETURN REQUEST:  wants to return 'Mathematics: Calculus and Linear Algebra'",
+        "type": "return_request",
+        "details": "Book: Mathematics: Calculus and Linear Algebra, On time - PENDING LIBRARIAN APPROVAL",
+        "timestamp": "2026-02-16 05:06:59",
+        "date": "2026-02-16",
+        "time": "05:06:59"
+    },
+    {
+        "id": "SYS1771214875521",
+        "user_id": 3,
+        "user_email": "hanan.mohammed@student.mwu.edu.et",
+        "user_name": "Hanan Mohammed",
+        "activity": "\ud83d\udd14 RETURN REQUEST: Hanan Mohammed wants to return 'Computer Organization and Architecture (COA)'",
+        "type": "return_request",
+        "details": "Book: Computer Organization and Architecture (COA), On time - PENDING LIBRARIAN APPROVAL",
+        "timestamp": "2026-02-16 05:07:55",
+        "date": "2026-02-16",
+        "time": "05:07:55"
+    },
+    {
+        "id": "SYS1771524642293",
+        "user_id": 2,
+        "user_email": "mulugeta.bekele@mwu.edu.et",
+        "user_name": "Ato Mulugeta Bekele",
+        "activity": "Book updated: 'Afaan Oromoo: Seerluga fi Barreeffama' by Baqqalaa Garbaa Hundessaa",
+        "type": "book_update",
+        "details": "Book ID: 1, ISBN: 9780743273565",
+        "timestamp": "2026-02-19 19:10:42",
+        "date": "2026-02-19",
+        "time": "19:10:42"
+    },
+    {
+        "id": "SYS1772993310592",
+        "user_id": 3,
+        "user_email": "hanan.mohammed@student.mwu.edu.et",
+        "user_name": "Hanan Mohammed",
+        "activity": "\ud83d\udd14 BORROW REQUEST: Hanan Mohammed wants to borrow 'Afaan Oromoo: Seerluga fi Barreeffama'",
+        "type": "borrow_request",
+        "details": "Student: Hanan Mohammed (ID: 3), Book: Afaan Oromoo: Seerluga fi Barreeffama - PENDING LIBRARIAN APPROVAL",
+        "timestamp": "2026-03-08 19:08:30",
+        "date": "2026-03-08",
+        "time": "19:08:30"
     }
 ]

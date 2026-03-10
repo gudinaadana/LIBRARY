@@ -185,13 +185,18 @@ export default function Dashboard() {
   // Auto-scroll to content when activeView changes
   useEffect(() => {
     if (activeView !== 'overview' && contentRef.current) {
-      // Small delay to ensure content is rendered
+      // Delay to ensure content is fully rendered
       setTimeout(() => {
         contentRef.current?.scrollIntoView({ 
           behavior: 'smooth', 
           block: 'start' 
         })
-      }, 100)
+        // Also scroll window to top of content
+        window.scrollTo({
+          top: contentRef.current?.offsetTop ? contentRef.current.offsetTop - 100 : 0,
+          behavior: 'smooth'
+        })
+      }, 200)
     }
   }, [activeView])
 
@@ -491,6 +496,28 @@ export default function Dashboard() {
     }
   }
 
+  const handleDeleteBook = async (bookId: number, bookTitle: string) => {
+    if (!confirm(`Are you sure you want to delete "${bookTitle}"?\n\nThis action cannot be undone.`)) {
+      return
+    }
+    
+    try {
+      await api.post('/books/delete', {
+        book_id: bookId,
+        librarian_id: user?.id,
+        librarian_email: user?.email,
+        librarian_name: user?.name
+      })
+      
+      alert('✅ Book deleted successfully!')
+      // Refresh both books and initial data
+      await loadInitialData()
+      await loadAvailableBooks()
+    } catch (error: any) {
+      alert(`❌ ${error.response?.data?.message || 'Error deleting book'}`)
+    }
+  }
+
   const handleRenewBook = async (borrowId: number) => {
     if (!user) {
       alert('Please login first')
@@ -572,9 +599,19 @@ export default function Dashboard() {
 
   const logout = () => {
     if (confirm('Are you sure you want to logout?')) {
+      // Clear all localStorage
       localStorage.removeItem('token')
       localStorage.removeItem('user')
-      router.push('/')
+      localStorage.clear() // Clear everything to be safe
+      
+      // Clear session storage too
+      sessionStorage.clear()
+      
+      // Use replace instead of push to prevent back button issues
+      router.replace('/')
+      
+      // Force reload to clear any cached state
+      window.location.href = '/'
     }
   }
 
@@ -607,7 +644,7 @@ export default function Dashboard() {
       {/* Navigation */}
       <nav className="gradient-bg text-white p-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-light">📚 MWU Online Library Management System</h1>
+          <h1 className="text-xl font-light">📚 MWU DIGITAL LIBRARY</h1>
           <div className="flex items-center space-x-4">
             <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
               {user.role.toUpperCase()}
@@ -1147,13 +1184,30 @@ export default function Dashboard() {
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500">
                 <h3 className="text-lg font-semibold mb-4">📚 Book Management</h3>
-                <p className="text-gray-600 mb-4">Add and update book information</p>
-                <button 
-                  onClick={() => setShowAddBookForm(true)}
-                  className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
-                >
-                  Add New Book
-                </button>
+                <p className="text-gray-600 mb-4">Add, edit, and delete book information</p>
+                <div className="space-y-2">
+                  <button 
+                    onClick={() => {
+                      setActiveView('manage-books')
+                      // Ensure scroll happens after state update
+                      setTimeout(() => {
+                        contentRef.current?.scrollIntoView({ 
+                          behavior: 'smooth', 
+                          block: 'start' 
+                        })
+                      }, 150)
+                    }}
+                    className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+                  >
+                    View All Books
+                  </button>
+                  <button 
+                    onClick={() => setShowAddBookForm(true)}
+                    className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+                  >
+                    Add New Book
+                  </button>
+                </div>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
                 <h3 className="text-lg font-semibold mb-4">📤 Issue & Return Books</h3>
@@ -1314,7 +1368,7 @@ export default function Dashboard() {
           <div className="p-6">
             {activeView === 'overview' && (
               <div className="text-center text-gray-600">
-                <p>Welcome to MWU Online Library Management System</p>
+                <p>Welcome to MWU DIGITAL LIBRARY</p>
                 <p>Select an option above to view data</p>
               </div>
             )}
@@ -2814,15 +2868,23 @@ export default function Dashboard() {
                             </span>
                           </td>
                           <td className="p-3">
-                            <button
-                              onClick={() => {
-                                setSelectedBook(book)
-                                setShowUpdateBookForm(true)
-                              }}
-                              className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors"
-                            >
-                              ✏️ Edit
-                            </button>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => {
+                                  setSelectedBook(book)
+                                  setShowUpdateBookForm(true)
+                                }}
+                                className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors"
+                              >
+                                ✏️ Edit
+                              </button>
+                              <button
+                                onClick={() => handleDeleteBook(book.id, book.title)}
+                                className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition-colors"
+                              >
+                                🗑️ Delete
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}

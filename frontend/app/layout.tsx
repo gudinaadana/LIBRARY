@@ -5,7 +5,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'MWU Online Library Management System',
+  title: 'MWU DIGITAL LIBRARY',
   description: 'Madda Walabu University Library Management System',
 }
 

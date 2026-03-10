@@ -10,13 +10,30 @@ export default function HomePage() {
 
   // Check if user is already logged in
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    const userData = localStorage.getItem('user')
-    
-    if (token && userData) {
-      // User is logged in, redirect to dashboard
-      router.push('/dashboard')
+    // Small delay to ensure localStorage is properly cleared after logout
+    const checkAuth = () => {
+      const token = localStorage.getItem('token')
+      const userData = localStorage.getItem('user')
+      
+      // Only redirect if BOTH token and user data exist and are valid
+      if (token && userData) {
+        try {
+          // Verify the user data is valid JSON
+          const user = JSON.parse(userData)
+          if (user && user.id && user.email) {
+            // User is logged in, redirect to dashboard
+            router.push('/dashboard')
+          }
+        } catch (e) {
+          // Invalid user data, clear it
+          localStorage.clear()
+        }
+      }
     }
+    
+    // Run check after a small delay
+    const timer = setTimeout(checkAuth, 100)
+    return () => clearTimeout(timer)
   }, [router])
 
   if (showLogin) {
@@ -53,7 +70,7 @@ export default function HomePage() {
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
               Madda Walabu University
             </span>
-            Online Library System
+            DIGITAL LIBRARY
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
             Access thousands of books, manage your borrowings, and explore our digital collection - all in one place
@@ -231,7 +248,7 @@ export default function HomePage() {
       <footer className="bg-black/30 backdrop-blur-md py-8 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
           <p>© 2024 Madda Walabu University. All rights reserved.</p>
-          <p className="mt-2">Online Library Management System</p>
+          <p className="mt-2">DIGITAL LIBRARY</p>
         </div>
       </footer>
     </div>
@@ -384,7 +401,7 @@ function LoginSection({ onBack }: { onBack: () => void }) {
 
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-800 mb-2">Madda Walabu University</h1>
-          <h2 className="text-xl text-blue-600 mb-6">Online Library Management System</h2>
+          <h2 className="text-xl text-blue-600 mb-6">DIGITAL LIBRARY</h2>
         </div>
 
         {alert.message && (
